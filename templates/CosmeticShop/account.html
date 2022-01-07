@@ -1,0 +1,74 @@
+{% extends 'CosmeticShop/layout.html' %}
+
+{% block content %}
+
+    <h4 class="text-center">Личный кабинет</h4>
+    <hr>
+     <div class="row">
+  <div class="col-4">
+    <div class="list-group" id="list-tab" role="tablist">
+      <a class="list-group-item list-group-item-action active" id="list-orders-list" data-bs-toggle="list" href="#list-orders" role="tab" aria-controls="list-orders">Заказы</a>
+      <a class="list-group-item list-group-item-action" id="list-wishlist-list" data-bs-toggle="list" href="#list-wishlist" role="tab" aria-controls="list-wishlist">Лист ожидания</a>
+    </div>
+  </div>
+  <div class="col-8">
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="list-orders" role="tabpanel" aria-labelledby="list-orders-list">
+          <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Номер заказа</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Сумма</th>
+                    <th scope="col">Детали</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in customer.customer_orders.all %}
+                    <tr>
+                        <th scope="row">{{ order.id }}</th>
+                        <th scope="row">{{ order.get_status_display }}</th>
+                        <th scope="row">{{ order.cart.final_price }} руб</th>
+                        <th scope="row"> {% for i in order.cart.products.all %}  {{ i }} <br> {% endfor %}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+      </div>
+      <div class="tab-pane fade" id="list-wishlist" role="tabpanel" aria-labelledby="list-wishlist-list">
+      <div class="row">
+          {% for product in customer.wishlist.all %}
+          <div class="card col-md-4 p-1 mb-3 mt-3">
+              <img src="{{ product.image.url }}" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5 class="card-title"><a href="{{ product.get_absolute_url }}" class="text-decoration-none">
+                        {{ product.title }}
+                    </a></h5>
+                </div>
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                  Область применения: <strong>{{ product.app_area.title }}</strong>
+              </li>
+                <li class="list-group-item">
+                  Консистенция: <strong>{{ product.condition.title }}</strong>
+              </li>
+              <li class="list-group-item">
+                  Наличие: {% if product.stock %} <strong class="badge bg-success">
+                Есть в наличии </strong> {% else %} <strong class="badge bg-danger">Нет в наличии</strong>
+                  {% endif %}
+              </li>
+          </ul>
+          <div class="card-body text-center">
+              <a href="{% url 'wishlist_delete' product_id=product.id %}" class="btn btn-danger">Удалить из ожидаемого</a>
+          </div>
+
+          </div>
+          {% endfor %}
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,64 @@
+{% extends 'CosmeticShop/layout.html' %}
+
+{% block content %}
+
+    <div class="col-md-12 pt-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'base' %}">Главная страница</a>
+                </li><li class="breadcrumb-item">
+                    <a href="{% url 'apparea_detail' apparea_slug=product.app_area.slug %}">{{ product.app_area.title }}</a>
+                </li><li class="breadcrumb-item">
+                {{ product.title }}
+                </li>
+            </ol>
+        </nav>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{ product.image.url }}" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <h4>{{ product.title }}</h4>
+            <hr>
+            <p>Кондиция: {{ product.condition }}</p>
+            <p>Описание: {{ product.discription }}</p>
+            <p>Данные о производителе: {{ product.specifications.manufacturer }} </p>
+            <p>Страна производства : {{ product.specifications.country }} </p>
+            <p>Поставщик: {{ product.specifications.supplier }} </p>
+            <p>Наличие: {% if product.stock %} <strong>{{ product.stock }} шт.</strong>{% else %} <strong>Нет в наличии</strong>{% endif %}</p>
+        <div class="row">
+        {% for item in product.image_gallery.all %}
+            <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+            <img src="{{ item.image.url }}" class="w-100">
+            </div>
+        {% endfor %}
+        </div>
+                        <div class="card-body text-center">
+                    {% if request.user.is_authenticated %}
+                        {% if product.stock %}
+                            {% if product not in cart.products_in_cart %}
+                                <a href="{% url 'cart_add' ct_model=product.ct_model slug=product.slug %}">
+                                <button class="btn btn-primary">Добавить в корзину</button></a>
+                            {% else %}
+                                <a href="#" class="btn btn-default" disabled="">Добавлен в корзину</a>
+                            {% endif %}
+                        {% else %}
+                            {% if product not in request.user.customer.wishlist.all %}
+                                <a href="{% url 'wishlist_add' product_id=product.id %}" class="btn btn-warning">
+                                    добавить в ожидаемое</a>
+{#                                <button class="btn-primary">Добавить в ожидаемое</button></a>#}
+                            {% else %}
+                                <a href="#" class="btn btn-default" disabled="">Добавлен в лист ожидания</a>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        <a href="#" class="btn btn-default" disabled="">Для покупки данного товара авторизуйтесь или зарегестрируйтесь</a>
+                    {% endif %}
+                </div>
+
+        </div>
+    </div>
+    </div>
+
+{% endblock content %}
