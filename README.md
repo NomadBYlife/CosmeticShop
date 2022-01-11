@@ -35,4 +35,4 @@ Password: `admin`<br>
 Confirm password: `admin`<br>
 <br>
 Run server:<br>
-`python manage.py createsuperuser`<br>
+`python manage.py runserver`<br>
