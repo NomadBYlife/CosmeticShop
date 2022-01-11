@@ -14,23 +14,20 @@ class ImageGalleryInline(GenericTabularInline):
 
 
 class ApplicationAreaAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}
     inlines = [EffectInline]
     exclude = ('effect',)
 
 
 class ProductAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}
     list_display = ('id', 'title')
     list_display_links = ('id', 'title')
     inlines = [ImageGalleryInline]
 
 
-admin.site.register(Condition)
-admin.site.register(ApplicationArea, ApplicationAreaAdmin)
-admin.site.register(Product, ProductAdmin)
-admin.site.register(Effect)
-admin.site.register(Specifications)
-admin.site.register(Customer)
-admin.site.register(CartProduct)
+class EffectAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}
 
 
 class CartAdmin(admin.ModelAdmin):
@@ -38,6 +35,13 @@ class CartAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'total_products')
 
 
+admin.site.register(Condition)
+admin.site.register(ApplicationArea, ApplicationAreaAdmin)
+admin.site.register(Product, ProductAdmin)
+admin.site.register(Effect, EffectAdmin)
+admin.site.register(Specifications)
+admin.site.register(Customer)
+admin.site.register(CartProduct)
 admin.site.register(Cart, CartAdmin)
 admin.site.register(Order)
 admin.site.register(Notification)

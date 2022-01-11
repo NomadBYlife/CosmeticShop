@@ -5,6 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
 from django.utils.safestring import mark_safe
+from slugify import slugify
 
 
 class Condition(models.Model):
@@ -31,6 +32,11 @@ class Effect(models.Model):
         verbose_name = 'Эффект'
         verbose_name_plural = 'Эффекты'
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            title = str(self.title)
+            self.slug = slugify(title)
+        return super().save(*args, **kwargs)
 
 class ApplicationArea(models.Model):
     """Область применения"""
@@ -47,6 +53,12 @@ class ApplicationArea(models.Model):
     class Meta:
         verbose_name = 'область применения'
         verbose_name_plural = 'области применения'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            title = str(self.title)
+            self.slug = slugify(title)
+        return super().save(*args, **kwargs)
 
 
 class Product(models.Model):
@@ -76,6 +88,12 @@ class Product(models.Model):
     @property
     def ct_model(self):  # наименование модели в ловеркейсе
         return self._meta.model_name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            title = str(self.title)
+            self.slug = slugify(title)
+        return super().save(*args, **kwargs)
 
 
 
