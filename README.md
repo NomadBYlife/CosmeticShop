@@ -14,9 +14,9 @@ Django
 Repository CosmeticShop in Django 3 (for MacOs/Linux):
 
 Open terminal and go to the deerectory you need. <br>
-Enter command: `git clone git@github.com:NomadBYlife/MyBlog.git`
+Enter command: `git clone git@github.com:NomadBYlife/CosmeticShop.git`
 
-If you use https: `https://github.com/NomadBYlife/MyBlog.git`
+If you use https: `https://github.com/NomadBYlife/CosmeticShop.git`
 
 Enter next command:
 
