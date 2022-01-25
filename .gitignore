@@ -1,8 +1,9 @@
 db.sqlite3
-/media
+/media/images
 /.idea
 /static
 .DS_Store
 __pycache__/
 *.py[cod]
 *$py.class
+venv/

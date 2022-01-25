@@ -35,10 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
 
     'crispy_forms',
     'crispy_bootstrap5',
-    'CosmeticShop'
+    'CosmeticShop',
 ]
 
 
@@ -87,7 +88,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -134,3 +135,11 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR/'static_dev')
 ]
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GITHUB_KEY = 'f1dd441d16b014309fe0'
+SOCIAL_AUTH_GITHUB_SECRET = '9c24a2d8f0bb5c2cf3ec39e766c5a5676d813e77'
+LOGIN_REDIRECT_URL = '/'
